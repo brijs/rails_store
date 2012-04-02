@@ -1,14 +1,17 @@
 class ProductsController < ApplicationController
+  before_filter :signed_in_user, only: [:index, :show, :edit, :new, :create, :update, :destroy]
+
   # GET /products
   # GET /products.json
   def index
-    @products = Product.all
+    @products = Product.search(params[:search])
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render :json => @products }
     end
   end
+
 
   # GET /products/1
   # GET /products/1.json
@@ -44,9 +47,11 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
-        format.html { redirect_to @product, :notice => 'Product was successfully created.' }
+        flash[:success] = 'Product was successfully created.'
+        format.html { redirect_to @product }
         format.json { render :json => @product, :status => :created, :location => @product }
       else
+        flash[:error] = 'Error creating a new product'
         format.html { render :action => "new" }
         format.json { render :json => @product.errors, :status => :unprocessable_entity }
       end
@@ -60,9 +65,11 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.update_attributes(params[:product])
-        format.html { redirect_to @product, :notice => 'Product was successfully updated.' }
+        flash[:success] = 'Product was successfully updated.'
+        format.html { redirect_to @product}
         format.json { head :no_content }
       else
+        flash.now[:error] = 'Error updating a new product'
         format.html { render :action => "edit" }
         format.json { render :json => @product.errors, :status => :unprocessable_entity }
       end
@@ -80,4 +87,13 @@ class ProductsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  
+
+  private
+  
+  def signed_in_user
+    redirect_to signin_path, notice: "Please sign in." unless signed_in?
+  end
+
 end

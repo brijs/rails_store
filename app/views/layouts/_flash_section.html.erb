@@ -1,0 +1,7 @@
+<% flash.each do |name, msg|  %>
+	<div  class = "fade in alert alert-<%= ( name == :success || name == :notice )? "success" : "error" %>">
+		<%= msg %>
+		<a id = "my-alert" class="close" data-dismiss="alert">&times;</a>
+		
+	</div>
+<% end %>

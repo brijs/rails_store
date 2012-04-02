@@ -1,0 +1,16 @@
+<% provide(:title, "Sign in") %>
+
+<%= simple_form_for(:session, :url => sessions_path, :html => { :class => 'form-horizontal' } ) do |f| %>
+<fieldset>
+	<legend>Sign in</legend>
+
+	<%= f.input :email, :as => :email %>
+	<%= f.input :password, as: :password %>
+
+	<div class="form-actions">
+		<%= f.submit "Sign in", :class => 'btn btn-large btn-primary' %>
+		<p>New user? <%= link_to "Sign up now!", signup_path %></p>
+	</div>
+</fieldset>
+<% end %>
+

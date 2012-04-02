@@ -1,0 +1,17 @@
+<%= provide(:title, 'Sign up') %>
+
+<%= simple_form_for @user, :html => { :class => 'form-horizontal' } do |f| %>
+<%= render "shared/error_messages" %>
+<fieldset>
+	<legend><%= controller.action_name.capitalize %> Sign up</legend>
+
+	<%= f.input :name %>
+	<%= f.input :email %>
+	<%= f.input :password %>
+	<%= f.input :password_confirmation %>
+
+	<div class="form-actions">
+		<%= f.submit "Create my account", :class => 'btn btn-large btn-primary' %>
+	</div>
+</fieldset>
+<% end %>
