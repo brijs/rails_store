@@ -4,7 +4,7 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.search(params[:search])
+    @products = Product.paginate(page: params[:page], per_page: 15)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -89,11 +89,5 @@ class ProductsController < ApplicationController
   end
 
   
-
-  private
-  
-  def signed_in_user
-    redirect_to signin_path, notice: "Please sign in." unless signed_in?
-  end
 
 end
