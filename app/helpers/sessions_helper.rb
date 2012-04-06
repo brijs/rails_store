@@ -3,9 +3,9 @@ module SessionsHelper
 	# from various views by default, and by various controllers (after include 
 	# statements).
 
-def sign_in (user)
-	cookies.permanent[:remember_token] = user.remember_token
-	current_user = user
+	def sign_in (user)
+		cookies.permanent[:remember_token] = user.remember_token
+		current_user = user
 		# note: above calls the assignment method(helper function below)
 	end
 	
@@ -37,8 +37,10 @@ def sign_in (user)
 	end
 
 	def signed_in_user
-		store_location
-		redirect_to signin_path, notice: "Please sign in." unless signed_in?
+		if !signed_in?
+			store_location
+			redirect_to signin_path, notice: "Please sign in." 
+		end
 	end
 
 	def redirect_back_or(default)
